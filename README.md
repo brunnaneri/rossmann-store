@@ -66,10 +66,36 @@ Foram feitas as seguintes considerações durante o desenvolvimento do projeto:
 
 ### PASSO 7 - Feature Selection
 
-### PASSO 8 - Machine Learning Model
+### PASSO 8 - Machine Learning Models
+  COLOCAR A SESSAO 7.0
 
 ### PASSO 9 - Fine Tunning
 
 ### PASSO 10 - Interpretação e Tradução do Erro
 
 ### PASSO 11 - Deploy to Production
+
+## 3.3 Entrada
+
+### 3.3.1 Fonte de Dados
+
+### 3.3.2 Ferramentas
+
+# 4.0 TOP INSIGHTS
+Durante a análise exploratória de dados, na etapa de validação das hipóteses, foram gerados insights ao time de negócio.
+
+Insights são informações novas, ou que contrapõe crenças até então estabelecidas do time de negócios, que devem ser acionáveis e assim direcionar resultados futuros.
+
+# 5.0 MODELO DE MACHINE LEARNING APLICADO
+
+COLOCAR A SESSAO 8.0 FINE TUNNING
+
+# 6.0 PERFORMANCE DO MODELO
+
+COLOCAR A SESSÃO 9.0
+
+COLOCAR UM GIF DO TELEGRAM
+
+# 7.0 CONCLUSÕES
+
+# 8.0 PRÓXIMOS PASSOS
