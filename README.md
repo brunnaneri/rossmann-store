@@ -131,7 +131,7 @@ Os resultados dos desempenhos dos modelos estão descritos abaixo:
 
 Observou-se um melhor desempenho nos modelos baseado em árvores, Random Forest e XGBoost, e um desempenho ruim nos modelos de Linear Regression e Linear Regression Regularized, demonstrando um certo nível de complexidade do problema.
 
-Em seguida, os modelos foram treinados novamente utilizando a técnica de Cross-Validation (CV), a qual permite medir o desempenho do modelo em vários intervalos de tempo no conjunto de dados total, de forma que permite diminuir a influência do período escolhido para realizar treinamento e validação.
+Em seguida, os modelos foram treinados novamente utilizando a técnica de Cross-Validation (CV), a qual permite medir o desempenho em vários intervalos de tempo no conjunto de dados total, diminuindo a influência do período escolhido para realizar treinamento e validação.
 
 O cross-validation consiste, basicamente, em dividir os dados em diferentes partes para testar o modelo e assim obter a performance real, que corresponde, no caso, a média dos erros de cada iteração +/- desvio padrão.
 
@@ -141,11 +141,65 @@ Por se tratar de um problema em que o tempo influencia, foi necessário consider
 
 A porção de dados de validação corresponde a seis semanas em cada iteração.
 
+O desempenho dos modelos está descrito na tabela a seguir:
 
+Name_Model|	MAE CV |	MAPE CV	|RMSE CV|
+|:----------------|:------------------:|:-----------------------:|-----------------------:|
+|Linear Regression	|2080.12+/-341.75|	0.29+/-0.02|	2971.27+/-519.47|
+|Lasso|	2143.28+/-395.1|	0.29+/-0.01|	3090.02+/-577.04|
+|Random Forest Regressor|	854.45+/-269.82	|0.12+/-0.03	|1288.03+/-417.62|
+|XGBoost Regressor|	984.61+/-177.97|	0.14+/-0.02|	1402.0+/-247.48|
 
-### PASSO 9 - Fine Tunning
+Analisando os resultados, o algoritmo XGBoost Regressor foi escolhido para seguir na solução deste problema de negócio. Mesmo o Random Forest Regressor tendo um desempenho um pouco acima do XGBoost, fatores como tempo de execução do algoritmo e espaço de memória do modelo também foram considerados na escolha do modelo, os quais são consideravelmente maiores no Random Forest.
+
+### PASSO 9 - Hyperparameter Fine Tunning
+
+Nesta etapa busca-se uma melhora da performance do modelo através da otimização dos seus parâmetros. Para isso, foi utilizado o método Random Search para treinar novamente o algoritmo, aplicando o cross-validation, totalizando 25 iterações. Os parâmetros calibrados foram: n_estimators, eta, max_depth, subsample e colsample_bytree. Todas as iterações estão detalhadas no notebook, contendo seus parâmetros e valores de MAE, MAPE e RMSE.
+
+O modelo foi escolhido baseado na sua performance e tempo de execução, visando otimizar também a operacionabilidade. Os resultados do desempenho podem ser observados na tabela seguir:
+
+MODEL|MAE|MAPE|RMSE|
+|:----------------|:------------------:|:-----------------------:|-----------------------:|
+XGBoost Regressor | 897.98+/-141.27 │ 0.12+/-0.01 │ 1284.86+/-201.52 
+
+Por fim, o modelo foi treinado com toda base de dados:
+```python
+param_tuned = {'n_estimators': 1750, 
+                'eta': 0.03, 
+                'max_depth': 5, 
+                'subsample': 0.3, 
+               'colsample_bytree': 0.7}
+
+xgb_model_tuned = xgb.XGBRegressor( objective='reg:squarederror',
+                                n_estimators=param_tuned['n_estimators'],
+                                eta=param_tuned['eta'],
+                                max_depth=param_tuned['max_depth'],
+                                subsample=param_tuned['subsample'],
+                                colsample_bytree=param_tuned['colsample_bytree'] ).fit( x_train, y_train )
+```                                   
+A performance do modelo com os dados de teste foi:
+
+|Name_Model|	MAE|	MAPE|	RMSE|
+|:----------------|:------------------:|:-----------------------:|-----------------------:|
+|XGBoost Regressor|	685.688619|	0.101687|	988.820648|
 
 ### PASSO 10 - Interpretação e Tradução do Erro
+
+Neste passo, os resultados do modelo, os erros, são analisados a fim de avaliar a performance do algoritmo e também são traduzido como resultados do negócio, em valores financeiros considerando diferentes cenários.
+
+#### Business Performance
+
+Considerando o MAE calculado para cada loja no conjunto de dados de teste, foi possível calcular o pior e melhor cenário para cada uma destas.
+A seguir, está descrita expectativa de venda para as cinco primeiras lojas:
+
+|store	prediction	MAE	MAPE	worst_scenario	best_scenario
+|1|	161278.609375|	275.730621|	0.062825|	161002.878754|	161554.33999|
+|2|	182446.890625|	396.693313|	0.081775|	182050.197312|	182843.58393|
+|3|	262568.281250|	566.920126|	0.079047|	262001.361124|	263135.20137|
+|4|	348689.750000|	861.404574|	0.082938|	347828.345426|	349551.15457|
+|5|	173324.593750|	387.789676|	0.084827|	172936.804074|	173712.38342|
+
+
 
 ### PASSO 11 - Deploy to Production
 
