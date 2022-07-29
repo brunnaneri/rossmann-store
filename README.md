@@ -1,6 +1,6 @@
-# Rossmann Store - Sales Predict
+# <p align="center"> Rossmann Store - Sales Predict </p>
 
-FOTO
+<p align="center"> <img src="https://github.com/brunnaneri/rossmann-store/blob/main/img/rossmann.jpg?raw=true" width=70% height=70% title="Health-Insurance-Ranking" alt="project_cover_image"/> </p>
 
 Rossmann é uma rede de farmária que está presente em sete países na Europa, composta por mais de 3000 drogarias. 
 As vendas das lojas são influenciadas por diversos fatores, como promoções, competição entre lojas próximas, feriados, sazonalidade e localidade. Atualmente, os gerentes de loja da Rossmann têm a tarefa de prever suas vendas diárias com até seis semanas de antecedência, no entanto, como os gerentes fazem suas previsões de venda individualmente, considerando circunstâncias únicas, a precisão dos seus resultados pode ser bastante incerta.
@@ -174,12 +174,13 @@ O arquitetura do deploy está ilustrada no seguinte esquema:
 
 Check o funcionamento do Bot:
 
-- Diga "Hi" para o nosso Bot!
-COLOCAR LINK DO TELEGRAM COM O ICONE
+- Diga "start" para iniciar o nosso Bot!
+
+[<img alt="Telegram" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>](https://t.me/rossmann_m_bot)
 
 Veja uma breve demonstração do seu funcionamento:
 
-COLCOAR O GIF
+<img src="https://github.com/brunnaneri/rossmann-store/blob/main/img/telegram-bot-gif.gif?raw=true" width=25% height=25% title="telegram-bot" alt="project_cover_image"/>
 
 ## 3.3 Entrada
 
