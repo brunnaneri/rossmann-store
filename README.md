@@ -1,11 +1,12 @@
 # Rossmann Store - Sales Predict
 
+FOTO
+
 Rossmann é uma rede de farmária que está presente em sete países na Europa, composta por mais de 3000 drogarias. 
 As vendas das lojas são influenciadas por diversos fatores, como promoções, competição entre lojas próximas, feriados, sazonalidade e localidade. Atualmente, os gerentes de loja da Rossmann têm a tarefa de prever suas vendas diárias com até seis semanas de antecedência, no entanto, como os gerentes fazem suas previsões de venda individualmente, considerando circunstâncias únicas, a precisão dos seus resultados pode ser bastante incerta.
 
 Observação: Este projeto foi inspirado no desafio "Rossmann Store Sales" publicado no Kaggle (https://www.kaggle.com/competitions/rossmann-store-sales). Por isso, trata-se de um problema fictício, no entanto solucionado com passos e análises de um projeto real.
 
-DESCRIÇÃO + FOTO
 
 # 1.0 PROBLEMA DE NEGÓCIO
 
@@ -150,13 +151,85 @@ Name_Model|	MAE CV |	MAPE CV	|RMSE CV|
 |Random Forest Regressor|	854.45+/-269.82	|0.12+/-0.03	|1288.03+/-417.62|
 |XGBoost Regressor|	984.61+/-177.97|	0.14+/-0.02|	1402.0+/-247.48|
 
-Analisando os resultados, o algoritmo XGBoost Regressor foi escolhido para seguir na solução deste problema de negócio. Mesmo o Random Forest Regressor tendo um desempenho um pouco acima do XGBoost, fatores como tempo de execução do algoritmo e espaço de memória do modelo também foram considerados na escolha do modelo, os quais são consideravelmente maiores no Random Forest.
 
 ### PASSO 9 - Hyperparameter Fine Tunning
 
 Nesta etapa busca-se uma melhora da performance do modelo através da otimização dos seus parâmetros. Para isso, foi utilizado o método Random Search para treinar novamente o algoritmo, aplicando o cross-validation, totalizando 25 iterações. Os parâmetros calibrados foram: n_estimators, eta, max_depth, subsample e colsample_bytree. Todas as iterações estão detalhadas no notebook, contendo seus parâmetros e valores de MAE, MAPE e RMSE.
 
-O modelo foi escolhido baseado na sua performance e tempo de execução, visando otimizar também a operacionabilidade. Os resultados do desempenho podem ser observados na tabela seguir:
+
+### PASSO 10 - Interpretação e Tradução do Erro
+
+Neste passo, os resultados do modelo (os erros) são analisados a fim de avaliar a performance do algoritmo e também são traduzido como resultados do negócio, em valores financeiros considerando diferentes cenários.
+
+
+### PASSO 11 - Deploy to Production
+
+Criou-se uma API Handler que permite acessar o modelo final treinado e a classe Rossmann, que contém todo o pipeline de preparação dos dados para entrarem no modelo. 
+A API Handler é acessada através da API do TelegramBot (API-Rossmann) criada, a qual gerencia as mensagens enviadas e recebidas pelo usuário, e que permite ao usuário acessar as predições através do Bot criado no Telegram APP.
+Todos os arquivos estão hospedados no Heroku Cloud (https://www.heroku.com/).
+
+O arquitetura do deploy está ilustrada no seguinte esquema:
+
+![image](https://user-images.githubusercontent.com/101215927/181655155-84e1a2b0-9be8-40ca-bccf-5243d8c772f5.png)
+
+Check o funcionamento do Bot:
+
+- Diga "Hi" para o nosso Bot!
+COLOCAR LINK DO TELEGRAM COM O ICONE
+
+Veja uma breve demonstração do seu funcionamento:
+
+COLCOAR O GIF
+
+## 3.3 Entrada
+
+### 3.3.1 Fonte de Dados
+
+- Dados coletados da plataforma Kaggle.
+
+### 3.3.2 Ferramentas
+- Python 3.8.12;
+- Jupyter Notebook;
+- Algoritmos de Regressão;
+- Pacotes de Machine Learning sklearn e xgboost;
+- BorutaPy (seleção de atributos);
+- Flask - Python API's;
+- Front-End API: Telegram Bot;
+- Git e Github;
+- Heroku Cloud;
+- Coggle Mindmaps.
+
+
+# 4.0 TOP 3 INSIGHTS
+Durante a análise exploratória de dados, na etapa de validação das hipóteses, foram gerados insights ao time de negócio.
+Insights são informações novas, ou que contrapõe crenças até então estabelecidas do time de negócios, que devem ser acionáveis e assim direcionar resultados futuros.
+
+**H1.Lojas com maior sortimento deveriam vender mais.**
+### Verdadeiro. Lojas classificadas com 'assortment' extra, em média, vendem mais.
+
+![image](https://user-images.githubusercontent.com/101215927/181657686-4e9a7251-7af6-4a17-b681-ea3904c5ec2b.png)
+
+Ao traçar a média das vendas por tipo de 'assortment' em todo o período, é possível observar um melhor desempenho das lojas que possuem sortimento 'extra', em comparação com as outras.
+
+**H6. Lojas que participam de promoções consecutivas deveriam vender mais.**
+### Falsa. Lojas que não participam do período de promoção consecutiva, em média, vende menos.
+Obs.:
+Lojas com mais promoções consecutivas são aquelas que participam da promo1 e da promo2 (lembrando que promo2=1 significa apenas que a loja participa dessa promoção, mas não necessariamente que no dia da venda ela está participando);
+Lojas com menos promoções consecutivas são aquelas que participam apenas da promo1.
+
+![image](https://user-images.githubusercontent.com/101215927/181657434-259b19c0-4572-4262-90ac-fa25a9b82cfb.png)
+
+**H10. Lojas deveriam vender mais depois do dia 10 de cada mês.**
+ ### Falso. Notou-se que as lojas vendem mais antes do dia 10 de cada mês
+ 
+ ![image](https://user-images.githubusercontent.com/101215927/181657548-28387913-1bfa-455b-86cc-d217810cc5a1.png)
+
+
+# 5.0 MODELO DE MACHINE LEARNING APLICADO
+
+Analisando os resultados, o algoritmo XGBoost Regressor foi escolhido para seguir na solução deste problema de negócio. Mesmo o Random Forest Regressor tendo um desempenho um pouco acima do XGBoost, fatores como tempo de execução do algoritmo e espaço de memória do modelo também foram considerados na escolha do modelo, os quais são consideravelmente maiores no Random Forest.
+
+Na etapa de Fine Tunning, os parâmetros escolhidos para o modelo final foram baseados na performance e tempo de execução do treinamento do modelo, visando otimizar também a operacionabilidade. Os resultados do desempenho podem ser observados na tabela seguir:
 
 MODEL|MAE|MAPE|RMSE|
 |:----------------|:------------------:|:-----------------------:|-----------------------:|
@@ -183,47 +256,41 @@ A performance do modelo com os dados de teste foi:
 |:----------------|:------------------:|:-----------------------:|-----------------------:|
 |XGBoost Regressor|	685.688619|	0.101687|	988.820648|
 
-### PASSO 10 - Interpretação e Tradução do Erro
-
-Neste passo, os resultados do modelo, os erros, são analisados a fim de avaliar a performance do algoritmo e também são traduzido como resultados do negócio, em valores financeiros considerando diferentes cenários.
+# 6.0 PERFORMANCE DO MODELO
 
 #### Business Performance
 
 Considerando o MAE calculado para cada loja no conjunto de dados de teste, foi possível calcular o pior e melhor cenário para cada uma destas.
 A seguir, está descrita expectativa de venda para as cinco primeiras lojas:
 
-|store	prediction	MAE	MAPE	worst_scenario	best_scenario
+|store|prediction|MAE|MAPE|worst_scenario|best_scenario|
+|:----------------|:------------------:|:-----------------------:|:-----------------------:|:-----------------------:|-----------------------:|
 |1|	161278.609375|	275.730621|	0.062825|	161002.878754|	161554.33999|
 |2|	182446.890625|	396.693313|	0.081775|	182050.197312|	182843.58393|
 |3|	262568.281250|	566.920126|	0.079047|	262001.361124|	263135.20137|
 |4|	348689.750000|	861.404574|	0.082938|	347828.345426|	349551.15457|
 |5|	173324.593750|	387.789676|	0.084827|	172936.804074|	173712.38342|
 
+Calculando o total, tem-se:
+
+|scenarios|	values|
+|:----------------|------------------:|
+|prediction|	$286,570,592.00
+|worst_scenario|	$285,802,068.49
+|best_scenario|	$287,339,116.71
+
+O desempenho geral do modelo pode ser visto no seguintes gráficos:
+error_rate = predictions/sales
+error = sales - predictions
+
+![image](https://user-images.githubusercontent.com/101215927/181652898-3f4c269d-f60b-4201-97b4-0663f58cb3ce.png)
 
 
-### PASSO 11 - Deploy to Production
+# 7.0 CONCLUSÕES & PRÓXIMOS PASSOS
+No geral, considerou-se que o modelo teve uma performance satisfatória, no entanto, melhorias sempre podem acontecer, as quais poderão ser incorporadas em um novo ciclo CRISP, caso se faça necessário.
+Possíveis próximos passos:
+- Pode-se considerar treinar as lojas separadamente.
+- Buscar/estudar meios de explorar a feature 'customers' que foi excluída (talvez criando um modelo de previsão de customers que se conecte com este)
+- Explorar outros modelos de machine learning.
 
-## 3.3 Entrada
-
-### 3.3.1 Fonte de Dados
-
-### 3.3.2 Ferramentas
-
-# 4.0 TOP INSIGHTS
-Durante a análise exploratória de dados, na etapa de validação das hipóteses, foram gerados insights ao time de negócio.
-
-Insights são informações novas, ou que contrapõe crenças até então estabelecidas do time de negócios, que devem ser acionáveis e assim direcionar resultados futuros.
-
-# 5.0 MODELO DE MACHINE LEARNING APLICADO
-
-COLOCAR A SESSAO 8.0 FINE TUNNING
-
-# 6.0 PERFORMANCE DO MODELO
-
-COLOCAR A SESSÃO 9.0
-
-COLOCAR UM GIF DO TELEGRAM
-
-# 7.0 CONCLUSÕES
-
-# 8.0 PRÓXIMOS PASSOS
+Mais detalhes sobre o desempenho dos negócios estão disponíveis no notebook.
