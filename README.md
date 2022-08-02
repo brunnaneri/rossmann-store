@@ -2,7 +2,7 @@
 
 <p align="center"> <img src="https://github.com/brunnaneri/rossmann-store/blob/main/img/rossmann.jpg?raw=true" width=70% height=70% title="Health-Insurance-Ranking" alt="project_cover_image"/> </p>
 
-Rossmann é uma rede de farmária que está presente em sete países na Europa, composta por mais de 3000 drogarias. 
+Rossmann é uma rede de farmárias que está presente em sete países na Europa, composta por mais de 3000 drogarias. 
 As vendas das lojas são influenciadas por diversos fatores, como promoções, competição entre lojas próximas, feriados, sazonalidade e localidade. Atualmente, os gerentes de loja da Rossmann têm a tarefa de prever suas vendas diárias com até seis semanas de antecedência, no entanto, como os gerentes fazem suas previsões de venda individualmente, considerando circunstâncias únicas, a precisão dos seus resultados pode ser bastante incerta.
 
 Observação: Este projeto foi inspirado no desafio "Rossmann Store Sales" publicado no Kaggle (https://www.kaggle.com/competitions/rossmann-store-sales). Por isso, trata-se de um problema fictício, no entanto solucionado com passos e análises de um projeto real.
@@ -13,11 +13,11 @@ Observação: Este projeto foi inspirado no desafio "Rossmann Store Sales" publi
 ## 1.1 Descrição do Problema
 
 O CFO da rede pretende fazer uma reforma nas lojas e para saber a viabilidade desse investimento, necessita da previsão de vendas diárias das lojas para as próximas 6 semanas com uma previsão mais assertiva.
-Para isso, será disponibilizada uma base de dados dados históricos de vendas de 1.115 lojas Rossmann.
+Para isso, será disponibilizada uma base de dados históricos de vendas de 1.115 lojas Rossmann.
 
 ## 1.2 Objetivo
 
-Desse modo, este projeto visa desenvolver um modelo que caracterize bem o comportamento de venda das diferentes lojas incluídas na base de dados e consiga fazer predições bem sucedidas das vendas de cada loja com uma antecedência de seis semanas.
+Desse modo, este projeto visa desenvolver um modelo que caracterize bem o comportamento de venda das diferentes lojas incluídas na base de dados e que consiga fazer predições bem sucedidas das vendas de cada loja com uma antecedência de seis semanas.
 
 ## 1.3 Sumário dos Dados
 
@@ -51,7 +51,7 @@ Foram feitas as seguintes considerações durante o desenvolvimento do projeto:
 
 ## 3.1 Produto Final
 
-Os resultados, ou seja, as predições, poderão ser acessadas via celular, através de um BOT do Telegram, em que o número da loja, 'Store ID, será repassado pelo usuário que irá receber a predição das vendas para as próximas seis semanas.
+Os resultados, ou seja, as predições, poderão ser acessadas via celular, através de um Bot do Telegram, em que o número da loja, 'Store ID, será repassado pelo usuário que irá receber a predição das vendas para as próximas seis semanas.
 
 ## 3.2 Processo
 A resolução foi realizada seguindo a metodologia CRISP-DM que é uma abordagem cíclica que agiliza a entrega de resultado/valor do projeto.
@@ -76,7 +76,7 @@ Etapa de criação de novas features (colunas) derivadas as originais e criaçã
 
 Nesse passo é feita a filtragem de colunas e seleção de linhas do dataset com a finalidade de analisar e pensar nas restrições do negócios, eliminando os dados que não agregam informação ou que não poderão ser usados no modelo por não estarem disponíveis na hora da predição.
 
-- Feature 'open' foi excluída porque foram filtrados apenas do dados em que 'open' = 1 (loja aberta), que é de fato o que nos interessa e nos serve para o problema de negócio;
+- Feature 'open' foi excluída porque foram filtrados apenas dados em que 'open' = 1 (loja aberta), que é de fato o que nos interessa e nos serve para o problema de negócio;
 - Feature 'costumers' foi excluída porque é uma informação que não temos disponível no momento da predição, é um dado consequente.
 
 ### PASSO 5 - Exploratory Data Analysis (EDA)
@@ -93,14 +93,14 @@ Análise Multivariada: Se busca redução da dimensionalidade do dataset, a fim 
 Preparação dos dados de forma que possibilite um melhor aprendizado do modelo de ML a ser aplicado, visto que a maioria desses tem um melhor desempenho quando se tem dados numéricos e em mesma escala.
 
 Foram realizadas as seguintes operações, quando necessárias:
-Reescala: dados numéricos que não tem distribuição normal.
+Reescala: em dados numéricos que não tem distribuição normal.
 Encoding: transformando dados categóricos em numéricos.
 Transformação de Natureza: transformando dados de natureza cíclica (dias, meses...), respeitando suas características.
 Transformação de grandeza: ocorre na variável resposta. A ideia é deixar a distribuição da variável mais próxima de uma normal.
 
 ### PASSO 7 - Feature Selection
 
-A seleção de atributos tem o objetivo de identificar e selecionar variáveis que caracterizam bem o fenômeno e por isso são relevantes para o modelo. Para isso, foi utilizado o algoritmo Boruta (https://github.com/scikit-learn-contrib/boruta_py) e comparado seu resultado com as análises feitas na etapa de EDA.
+A seleção de atributos tem o objetivo de identificar e selecionar variáveis que caracterizam bem o fenômeno e por isso são relevantes para o modelo. Para isso, foi utilizado o algoritmo BorutaPy (https://github.com/scikit-learn-contrib/boruta_py) e comparado seu resultado com as análises feitas na etapa de EDA.
 
 O algoritmos de machine learning foram treinados considerando as variáveis selecionadas nessa etapa.
 
@@ -154,12 +154,12 @@ Name_Model|	MAE CV |	MAPE CV	|RMSE CV|
 
 ### PASSO 9 - Hyperparameter Fine Tunning
 
-Nesta etapa busca-se uma melhora da performance do modelo através da otimização dos seus parâmetros. Para isso, foi utilizado o método Random Search para treinar novamente o algoritmo, aplicando o cross-validation, totalizando 25 iterações. Os parâmetros calibrados foram: n_estimators, eta, max_depth, subsample e colsample_bytree. Todas as iterações estão detalhadas no notebook, contendo seus parâmetros e valores de MAE, MAPE e RMSE.
+Nesta etapa busca-se uma melhoria da performance do modelo através da otimização dos seus parâmetros. Para isso, foi utilizado o método Random Search para treinar novamente o algoritmo, aplicando o cross-validation, totalizando em 25 iterações. Os parâmetros calibrados foram: n_estimators, eta, max_depth, subsample e colsample_bytree. Todas as iterações estão detalhadas no notebook, contendo seus parâmetros e valores de MAE, MAPE e RMSE.
 
 
 ### PASSO 10 - Interpretação e Tradução do Erro
 
-Neste passo, os resultados do modelo (os erros) são analisados a fim de avaliar a performance do algoritmo e também são traduzido como resultados do negócio, em valores financeiros considerando diferentes cenários.
+Neste passo, os resultados do modelo (os erros) são analisados a fim de avaliar a performance do algoritmo e também são traduzido como resultados do negócio em valores financeiros, considerando diferentes cenários.
 
 
 ### PASSO 11 - Deploy to Production
@@ -168,19 +168,11 @@ Criou-se uma API Handler que permite acessar o modelo final treinado e a classe 
 A API Handler é acessada através da API do TelegramBot (API-Rossmann) criada, a qual gerencia as mensagens enviadas e recebidas pelo usuário, e que permite ao usuário acessar as predições através do Bot criado no Telegram APP.
 Todos os arquivos estão hospedados no Heroku Cloud (https://www.heroku.com/).
 
-O arquitetura do deploy está ilustrada no seguinte esquema:
+A arquitetura do deploy está ilustrada no seguinte esquema:
 
 ![image](https://user-images.githubusercontent.com/101215927/181655155-84e1a2b0-9be8-40ca-bccf-5243d8c772f5.png)
 
-Check o funcionamento do Bot:
-
-- Diga "start" para iniciar o nosso Bot!
-
-[<img alt="Telegram" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>](https://t.me/rossmann_m_bot)
-
-Veja uma breve demonstração do seu funcionamento:
-
-<img src="https://github.com/brunnaneri/rossmann-store/blob/main/img/telegram-bot-gif.gif?raw=true" width=25% height=25% title="telegram-bot" alt="project_cover_image"/>
+Na seção 7.0 estará uma breve demonstração do funcionamento do Bot.
 
 ## 3.3 Entrada
 
@@ -228,7 +220,7 @@ Lojas com menos promoções consecutivas são aquelas que participam apenas da p
 
 # 5.0 MODELO DE MACHINE LEARNING APLICADO
 
-Analisando os resultados, o algoritmo XGBoost Regressor foi escolhido para seguir na solução deste problema de negócio. Mesmo o Random Forest Regressor tendo um desempenho um pouco acima do XGBoost, fatores como tempo de execução do algoritmo e espaço de memória do modelo também foram considerados na escolha do modelo, os quais são consideravelmente maiores no Random Forest.
+Analisando os resultados, o algoritmo XGBoost Regressor foi escolhido para seguir na solução deste problema de negócio. Mesmo o Random Forest Regressor tendo um desempenho um pouco acima do XGBoost, fatores como tempo de execução do algoritmo e espaço de memória do modelo também foram considerados na escolha, os quais são consideravelmente maiores no Random Forest.
 
 Na etapa de Fine Tunning, os parâmetros escolhidos para o modelo final foram baseados na performance e tempo de execução do treinamento do modelo, visando otimizar também a operacionabilidade. Os resultados do desempenho podem ser observados na tabela seguir:
 
@@ -286,8 +278,19 @@ error = sales - predictions
 
 ![image](https://user-images.githubusercontent.com/101215927/181652898-3f4c269d-f60b-4201-97b4-0663f58cb3ce.png)
 
+# 7.0 DEMONSTRAÇÃO DO Bot Telegram
 
-# 7.0 CONCLUSÕES & PRÓXIMOS PASSOS
+Check o funcionamento do Bot:
+
+- Diga "start" para iniciar o nosso Bot!
+
+[<img alt="Telegram" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>](https://t.me/rossmann_m_bot)
+
+Veja uma breve demonstração do seu funcionamento:
+
+<img src="https://github.com/brunnaneri/rossmann-store/blob/main/img/telegram-bot-gif.gif?raw=true" width=25% height=25% title="telegram-bot" alt="project_cover_image"/>
+
+# 8.0 CONCLUSÕES & PRÓXIMOS PASSOS
 No geral, considerou-se que o modelo teve uma performance satisfatória, no entanto, melhorias sempre podem acontecer, as quais poderão ser incorporadas em um novo ciclo CRISP, caso se faça necessário.
 Possíveis próximos passos:
 - Pode-se considerar treinar as lojas separadamente.
