@@ -226,7 +226,7 @@ Na etapa de Fine Tunning, os parâmetros escolhidos para o modelo final foram ba
 
 MODEL|MAE|MAPE|RMSE|
 |:----------------|:------------------:|:-----------------------:|-----------------------:|
-XGBoost Regressor | 897.98+/-141.27 │ 0.12+/-0.01 │ 1284.86+/-201.52 
+XGBoost Regressor | 897.98+/-141.27|0.12+/-0.01|1284.86+/-201.52 
 
 Por fim, o modelo foi treinado com toda base de dados:
 ```python
